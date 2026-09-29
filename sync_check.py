@@ -2,13 +2,7 @@ from time import perf_counter
 
 import httpx2
 
-URLS = [
-    "https://www.python.org",
-    "https://github.com",
-    "https://www.wikipedia.org",
-    "https://www.cloudflare.com",
-    "https://www.bilibili.com/",
-]
+from config import TIMEOUT, URLS
 
 
 def check_url(client: httpx2.Client, url: str):
@@ -21,6 +15,9 @@ def check_url(client: httpx2.Client, url: str):
     except httpx2.TimeoutException:
         status = "TIMEOUT"
 
+    except httpx2.RequestError:
+        status = "ERROR"
+
     elapsed = perf_counter() - start
 
     return url, status, elapsed
@@ -29,16 +26,16 @@ def check_url(client: httpx2.Client, url: str):
 def run_checks():
     start = perf_counter()
 
-    with httpx2.Client(timeout=3.0) as client:
+    with httpx2.Client(timeout=TIMEOUT) as client:
 
         results = []
 
         for url in URLS:
             results.append(check_url(client, url))
 
-        elapsed = perf_counter() - start
+    elapsed = perf_counter() - start
 
-        return results, elapsed
+    return results, elapsed
 
 
 def main():

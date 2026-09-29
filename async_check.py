@@ -3,13 +3,7 @@ from time import perf_counter
 
 import httpx2
 
-URLS = [
-    "https://www.python.org",
-    "https://github.com",
-    "https://www.wikipedia.org",
-    "https://www.cloudflare.com",
-    "https://www.bilibili.com/",
-]
+from config import TIMEOUT, URLS
 
 
 async def check_url(client: httpx2.AsyncClient, url: str):
@@ -21,6 +15,9 @@ async def check_url(client: httpx2.AsyncClient, url: str):
     except httpx2.TimeoutException:
         status = "TIMEOUT"
 
+    except httpx2.RequestError:
+        status = "ERROR"
+
     elapsed = perf_counter() - start
 
     return url, status, elapsed
@@ -29,7 +26,7 @@ async def check_url(client: httpx2.AsyncClient, url: str):
 async def run_checks():
     start = perf_counter()
 
-    async with httpx2.AsyncClient(timeout=3.0) as client:
+    async with httpx2.AsyncClient(timeout=TIMEOUT) as client:
 
         results = await asyncio.gather(*(check_url(client, url) for url in URLS))
 
