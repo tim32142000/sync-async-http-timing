@@ -25,6 +25,8 @@ if st.button("Run Comparison"):
 
         async_results, async_elapsed = asyncio.run(run_async_checks())
 
+        st.subheader("Running Times of Sync and Async Methods")
+
         # Header
         col1, col2, col3 = st.columns([4, 1, 1])
 
@@ -37,11 +39,25 @@ if st.button("Run Comparison"):
             sync_url, sync_status, sync_latency = sync_result
             async_url, async_status, async_latency = async_result
 
+            if sync_status == "TIMEOUT":
+                sync_text = "Timeout"
+            elif sync_status == "ERROR":
+                sync_text = "Error"
+            else:
+                sync_text = f"{sync_latency * 1000:.0f} ms"
+
+            if async_status == "TIMEOUT":
+                async_text = "Timeout"
+            elif async_status == "ERROR":
+                async_text = "Error"
+            else:
+                async_text = f"{async_latency * 1000:.0f} ms"
+
             col1, col2, col3 = st.columns([4, 1, 1])
 
             col1.write(display_name(sync_url))
-            col2.write(f"{sync_latency * 1000:.0f} ms")
-            col3.write(f"{async_latency * 1000:.0f} ms")
+            col2.write(sync_text)
+            col3.write(async_text)
 
         st.divider()
 
@@ -51,6 +67,8 @@ if st.button("Run Comparison"):
         col1.markdown("**Total**")
         col2.markdown(f"**{sync_elapsed:.3f} s**")
         col3.markdown(f"**{async_elapsed:.3f} s**")
+
+        st.divider()
 
         speedup = sync_elapsed / async_elapsed
 
