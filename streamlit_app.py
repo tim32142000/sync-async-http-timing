@@ -15,7 +15,7 @@ def display_name(url: str) -> str:
     )
 
 
-st.title("Async Service Monitor")
+st.title("Sync Async HTTP Timing")
 
 st.caption("Compare sequential and asynchronous HTTP request performance.")
 

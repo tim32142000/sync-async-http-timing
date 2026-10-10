@@ -45,9 +45,9 @@ def main():
     print("-" * 52)
 
     for url, status, latency in results:
-        print(f"{url:32} {status:>6} {latency:>9.4f} s")
+        print(f"{url:32} {status:>6} {latency:>9.3f} s")
 
-    print(f"\nTotal: {elapsed:.4f} s")
+    print(f"\nTotal: {elapsed:.3f} s")
 
 
 if __name__ == "__main__":

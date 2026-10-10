@@ -1,4 +1,4 @@
-# HTTP Sync Async Web
+# Sync Async HTTP Timing
 
 比較「循序（同步）」與「非同步」兩種 HTTP 請求方式效能差異的小型網站可用性檢查工具。
 
