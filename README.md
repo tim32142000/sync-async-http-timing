@@ -1,5 +1,11 @@
 # Sync Async HTTP Timing
 
+<br>
+
+[Streamlit DEMO](https://sync-async-http-timing.streamlit.app/)
+
+<br>
+
 比較「循序（同步）」與「非同步」兩種 HTTP 請求方式效能差異的小型網站可用性檢查工具。
 
 專案針對一組網站清單，分別以同步與非同步方式發送請求，並量測每個網站的回應延遲與整體耗時，最後透過命令列或 Streamlit 網頁介面呈現比較結果。
